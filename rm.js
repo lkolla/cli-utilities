@@ -4,6 +4,7 @@
 var argumentLength = process.argv.length
 var fs = require('pn/fs')
 require('songbird')
+var path = require('path')
 
 
 async function touch (){
@@ -13,29 +14,28 @@ if(argumentLength > 1){
 	var dirName = process.argv[2]
 	
 	try {
-     
-		await fs.promise.rmdir(dirName)
-
-		console.log('directory deleted successfully...')
 
 		//1) check if the given argument is a file?
-		//var stat = await fs.promise.stat(dirName)
+		var stat = await fs.promise.stat(dirName)
 
-		//if(stat.isDirectory()){
+		if(stat.isDirectory()){
 
-			// if not, show the error message
-		//	console.log(fileWithPath + '\t already exists')
+			let fileNames = await fs.readdir(dirName)
 
-		//}else{
+			for (let fileName of fileNames) {
+			    let filePath = path.join(dirName, fileName)
+			    await fs.promise.unlink(filePath)
+			}
 
-			//var arrayOfStrings = dirName.split('/')
+			await fs.promise.rmdir(dirName)
 
-			//var directoryName = arrayOfStrings[arrayOfStrings.length - 1]
+			console.log('directory deleted successfully...')			
 
-			// if yes, show the file content.
-			
+		}else{
 
-		//}
+			console.log(dirName + 'is not a directory')			
+
+		}
 
     } catch (e) {
         console.log(e.stack)
