@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env babel-node
 // cat functionality code.
 
 var argumentLength = process.argv.length
