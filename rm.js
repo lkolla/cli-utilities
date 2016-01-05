@@ -14,9 +14,9 @@ if(argumentLength > 1){
 	
 	try {
      
-		await fs.promise.unlink(dirName)
+		await fs.promise.rmdir(dirName)
 
-		console.log('directory created successfully...')
+		console.log('directory deleted successfully...')
 
 		//1) check if the given argument is a file?
 		//var stat = await fs.promise.stat(dirName)
